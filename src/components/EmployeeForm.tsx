@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-const EmployeeForm: React.FC = () => {
+
+const EmployeeForm = ({ customerId }) => {
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
 
-  const handleAddEmployee = () => {
-    const newEmployee = { id: Date.now().toString(), name, role, email };
+  console.log("customerId ", customerId);
 
-    localStorage.setItem("customers", JSON.stringify(newEmployee));
-  };
+  const handleAddEmployee = () => {};
 
   return (
     <div>
@@ -37,4 +36,5 @@ const EmployeeForm: React.FC = () => {
     </div>
   );
 };
+
 export default EmployeeForm;
