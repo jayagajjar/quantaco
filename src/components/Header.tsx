@@ -20,6 +20,8 @@ const styles = {
   header: {
     backgroundColor: "#eaeaea",
     width: "100%",
+    display: "flex",
+    gap: "1rem",
   },
   button: {
     backgroundColor: "rgb(5,44,86)",

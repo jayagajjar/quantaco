@@ -1,21 +1,15 @@
-import React, { useState } from "react";
-import { getFromLocalStorage } from "../utils/utils";
+import React from "react";
 import EmployeeForm from "../components/EmployeeForm";
 import EmployeeList from "../components/EmployeeList";
 import { useNavigate } from "react-router-dom";
 import { StorageKeys } from "../utils/stogareKeys";
+import { useCustomers } from "../context/CustomerContext";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [customer, setCustomer] = useState(
-    getFromLocalStorage(StorageKeys.LOGGED_IN_USER)
-  );
 
-  const refreshEmployees = () => {
-    const updatedCustomer =
-      getFromLocalStorage(StorageKeys.LOGGED_IN_USER) || [];
-    setCustomer(updatedCustomer);
-  };
+  const { loggedInCustomer } = useCustomers();
+  console.log("Dashboard:: loggedInCustomer ", loggedInCustomer);
 
   const handleSignOut = () => {
     localStorage.removeItem(StorageKeys.LOGGED_IN_USER);
@@ -24,11 +18,11 @@ const Dashboard = () => {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>Welcome {customer?.fullName}</h2>
-      {customer && (
+      <h2 style={styles.title}>Welcome {loggedInCustomer?.fullName}</h2>
+      {loggedInCustomer && (
         <div style={styles.content}>
-          <EmployeeForm customerId={customer.id} refresh={refreshEmployees} />
-          <EmployeeList employees={customer.employees} />
+          <EmployeeForm customerId={loggedInCustomer.id} />
+          <EmployeeList />
           <button type="submit" onClick={handleSignOut} style={styles.button}>
             Sign Out
           </button>

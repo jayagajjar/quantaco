@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Employee } from "../types";
-import { getFromLocalStorage, saveToLocalStorage } from "../utils/utils";
-import { StorageKeys } from "../utils/stogareKeys";
+import { useCustomers } from "../context/CustomerContext";
 
-const EmployeeForm = ({ customerId, refresh }) => {
+const EmployeeForm = ({ customerId }) => {
+  const { addEmployee } = useCustomers();
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
@@ -23,16 +23,7 @@ const EmployeeForm = ({ customerId, refresh }) => {
       email,
     };
 
-    const customers = getFromLocalStorage(StorageKeys.CUSTOMERS) || [];
-    const customerIndex = customers.findIndex((c) => c.id === customerId);
-
-    if (customerIndex !== -1) {
-      customers[customerIndex].employees.push(newEmployee);
-      saveToLocalStorage(StorageKeys.CUSTOMERS, customers);
-      saveToLocalStorage(StorageKeys.LOGGED_IN_USER, customers[customerIndex]);
-      console.log("Employee Added");
-      refresh();
-    }
+    addEmployee(customerId, newEmployee);
 
     setName("");
     setRole("");

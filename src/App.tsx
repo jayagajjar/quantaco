@@ -7,26 +7,20 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Dashboard from "./pages/Dashboard";
 import Header from "./components/Header";
+import { CustomerProvider } from "./context/CustomerContext";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const user = getFromLocalStorage(StorageKeys.LOGGED_IN_USER);
-    setIsLoggedIn(!!user);
-  }, []);
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<SignUp />} />
-        <Route
-          path="/login"
-          element={<Login setIsLoggedIn={setIsLoggedIn} />}
-        />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-    </BrowserRouter>
+    <CustomerProvider>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </BrowserRouter>
+    </CustomerProvider>
   );
 }
 

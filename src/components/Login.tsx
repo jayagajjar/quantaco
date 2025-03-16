@@ -1,27 +1,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getFromLocalStorage, saveToLocalStorage } from "../utils/utils";
-import { StorageKeys } from "../utils/stogareKeys";
-import Header from "./Header";
+import { useCustomers } from "../context/CustomerContext";
 
-const Login = ({
-  setIsLoggedIn,
-}: {
-  setIsLoggedIn: (value: boolean) => void;
-}) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  const { customers, setLoggedInCustomer } = useCustomers();
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const customers = getFromLocalStorage(StorageKeys.CUSTOMERS);
     const foundCustomer = customers.find((c) => c.email === email);
+
+    if (!foundCustomer || foundCustomer.password !== password) {
+      alert("Invalid email or password");
+      return;
+    }
 
     console.log("Login :: foundCustomer", foundCustomer);
 
-    saveToLocalStorage(StorageKeys.LOGGED_IN_USER, foundCustomer);
+    setLoggedInCustomer(foundCustomer);
     navigate("/dashboard");
   };
 

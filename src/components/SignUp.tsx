@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Customer } from "../types";
-import { saveToLocalStorage, getFromLocalStorage } from "../utils/utils";
-import { StorageKeys } from "../utils/stogareKeys";
+import { useCustomers } from "../context/CustomerContext";
 
 const SignUp = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { customers, setCustomers, setLoggedInCustomer } = useCustomers();
 
   const handleSignUp = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,8 +26,6 @@ const SignUp = () => {
       employees: [],
     };
 
-    const customers = getFromLocalStorage(StorageKeys.CUSTOMERS) || [];
-
     const customerExists = customers.find((c) => c.email === email);
 
     if (customerExists) {
@@ -35,8 +33,8 @@ const SignUp = () => {
       navigate("/login");
     } else {
       customers.push(newCustomer);
-      saveToLocalStorage(StorageKeys.CUSTOMERS, customers);
-      saveToLocalStorage(StorageKeys.LOGGED_IN_USER, newCustomer);
+      setCustomers(customers);
+      setLoggedInCustomer(newCustomer);
       navigate("/dashboard");
     }
   };

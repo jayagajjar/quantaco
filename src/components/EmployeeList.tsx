@@ -1,13 +1,20 @@
 import React from "react";
+import { useCustomers } from "../context/CustomerContext";
 
-const EmployeeList = ({ employees }) => {
-  console.log("EmployeeList :: employees ", employees);
+const EmployeeList = () => {
+  const { customers, loggedInCustomer } = useCustomers();
+  console.log("Dashboard:: customers ", customers);
+  const customer = customers.find((c) => c.id === loggedInCustomer?.id);
+
+  if (!customer) {
+    return <p style={styles.noEmployees}>No customer found.</p>;
+  }
 
   return (
     <div style={styles.container}>
       <h3 style={styles.title}>Employees</h3>
       <ul style={styles.list}>
-        {employees.map((emp) => (
+        {customer.employees.map((emp) => (
           <li key={emp.id} style={styles.listItem}>
             <span style={styles.name}>{emp.name}</span> -
             <span style={styles.role}>{emp.role}</span> -
