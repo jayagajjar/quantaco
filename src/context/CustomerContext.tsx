@@ -29,7 +29,6 @@ export const CustomerProvider = ({ children }) => {
   }, []);
 
   const addEmployee = (customerId: string, newEmployee: Employee) => {
-    console.log("CustomerProvider :: addEmployee ");
     setCustomers((prev) => {
       const updated = prev.map((c) =>
         c.id === customerId

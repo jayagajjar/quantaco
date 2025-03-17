@@ -3,7 +3,6 @@ import { useCustomers } from "../context/CustomerContext";
 
 const EmployeeList = () => {
   const { customers, loggedInCustomer } = useCustomers();
-  console.log("Dashboard:: customers ", customers);
   const customer = customers.find((c) => c.id === loggedInCustomer?.id);
 
   if (!customer) {

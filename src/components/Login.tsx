@@ -17,8 +17,6 @@ const Login = () => {
       return;
     }
 
-    console.log("Login :: foundCustomer", foundCustomer);
-
     setLoggedInCustomer(foundCustomer);
     navigate("/dashboard");
   };

@@ -9,7 +9,6 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const { loggedInCustomer } = useCustomers();
-  console.log("Dashboard:: loggedInCustomer ", loggedInCustomer);
 
   const handleSignOut = () => {
     localStorage.removeItem(StorageKeys.LOGGED_IN_USER);
@@ -37,7 +36,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    padding: "2rem",
+    padding: "6rem",
     backgroundColor: "#f8f9fa",
     minHeight: "100vh",
     fontFamily: " Helvetica, Arial, sans-serif",
