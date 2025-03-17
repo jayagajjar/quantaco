@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Customer } from "../types";
 import { useCustomers } from "../context/CustomerContext";
+import { validateEmail } from "./../utils/utils";
 
 const SignUp = () => {
   const [fullName, setFullName] = useState("");
@@ -15,6 +16,11 @@ const SignUp = () => {
 
     if (!fullName || !email || !password) {
       alert("All fields are required");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      alert("Please enter a valid email address");
       return;
     }
 
@@ -43,7 +49,7 @@ const SignUp = () => {
     <div style={styles.container}>
       <div style={styles.card}>
         <h2 style={styles.title}>Sign Up</h2>
-        <form onSubmit={handleSignUp} style={styles.form}>
+        <form onSubmit={handleSignUp} style={styles.form} noValidate>
           <input
             type="text"
             placeholder="Full Name"

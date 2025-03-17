@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Employee } from "../types";
 import { useCustomers } from "../context/CustomerContext";
+import { validateEmail } from "../utils/utils";
 
 const EmployeeForm = ({ customerId }) => {
   const { addEmployee } = useCustomers();
@@ -11,8 +12,13 @@ const EmployeeForm = ({ customerId }) => {
   const handleAddEmployee = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!name || !role || !email.includes("@")) {
+    if (!name || !role || !email) {
       alert("All fields are required");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      alert("Please enter a valid email address");
       return;
     }
 
@@ -33,7 +39,7 @@ const EmployeeForm = ({ customerId }) => {
   return (
     <div style={styles.container}>
       <h3 style={styles.title}>Add Employee</h3>
-      <form onSubmit={handleAddEmployee} style={styles.form}>
+      <form onSubmit={handleAddEmployee} style={styles.form} noValidate>
         <input
           type="text"
           placeholder="Name"
